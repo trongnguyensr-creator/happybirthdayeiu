@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<title>Happy Birthday Eiu</title>
+<title>Happy Birthday, My Love ♡</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 *{
@@ -191,7 +191,7 @@ html, body{
 
 /* Scroll indicator */
 .scroll-indicator {
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
@@ -199,34 +199,42 @@ html, body{
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  opacity: 0.7;
+  opacity: 0.8;
   animation: fadeInOut 2s infinite;
-  z-index: 10;
+  z-index: 100;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  padding: 12px 24px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .scroll-text {
-  font-size: 1.2rem;
-  color: #ff6b9d;
-  font-weight: 600;
+  font-size: 1.3rem;
+  color: #ff4081;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(255, 64, 129, 0.3);
 }
 
 .scroll-arrow {
-  width: 24px;
-  height: 24px;
-  border-right: 3px solid #ff6b9d;
-  border-bottom: 3px solid #ff6b9d;
+  width: 28px;
+  height: 28px;
+  border-right: 4px solid #ff4081;
+  border-bottom: 4px solid #ff4081;
   transform: rotate(45deg);
   animation: bounce 1.5s infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 64, 129, 0.5));
 }
 
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(-5px); }
 }
 
 @keyframes bounce {
   0%, 100% { transform: rotate(45deg) translateY(0); }
-  50% { transform: rotate(45deg) translateY(10px); }
+  50% { transform: rotate(45deg) translateY(12px); }
 }
 
 /* ===== MOBILE OPTIMIZATIONS ===== */
@@ -264,6 +272,19 @@ html, body{
   #letterContent {
     font-size: 1.3rem;
     line-height: 1.75;
+  }
+  .scroll-text {
+    font-size: 1.15rem;
+  }
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+    border-right: 3px solid #ff4081;
+    border-bottom: 3px solid #ff4081;
+  }
+  .scroll-indicator {
+    padding: 10px 20px;
+    bottom: 20px;
   }
   .floating-glow {
     filter: blur(20px);
@@ -313,9 +334,7 @@ html, body{
     <div style="font-size: 2.8rem; font-weight: 700; color: #fff; text-shadow: 0 0 25px #ff6b9d, 0 0 45px #ff9fc4, 0 0 65px #ffc1d6; animation: pulseSoft 2s infinite ease-in-out;">
       NHẤN VÀO MÀN HÌNH
     </div>
-    <div style="font-size: 1.6rem; font-weight: 500; color: #fff; margin-top: 20px; opacity: 0.85; text-shadow: 0 0 15px #ff9fc4;">
-      để bắt đầu ♡
-    </div>
+  
   </div>
 </div>
 
@@ -339,7 +358,7 @@ html, body{
       <div id="letterContent"></div>
       <div class="letter-footer">- Yêu em mãi mãi -</div>
     </div>
-    <div class="scroll-indicator">
+    <div class="scroll-indicator" id="scrollIndicator">
       <div class="scroll-text">13-02-2026</div>
       <div class="scroll-arrow"></div>
     </div>
@@ -363,7 +382,7 @@ const ss = document.getElementById('ss');
 const dateEl = document.getElementById('date');
 const letterContent = document.getElementById('letterContent');
 const bgMusic = document.getElementById('bgMusic');
-const scrollIndicator = document.querySelector('.scroll-indicator');
+const scrollIndicator = document.getElementById('scrollIndicator');
 
 // Countdown variables
 let hours = 23;
@@ -491,6 +510,12 @@ function typeWriter(element, text, speed = 30) {
   element.innerHTML = '';
   letterTyped = false;
   
+  // Show scroll indicator when letter appears
+  if (scrollIndicator) {
+    scrollIndicator.style.display = 'flex';
+    scrollIndicator.style.opacity = '0.8';
+  }
+  
   function type() {
     if (i < text.length) {
       if (text.charAt(i) === '\n') {
@@ -502,13 +527,10 @@ function typeWriter(element, text, speed = 30) {
       setTimeout(type, speed);
     } else {
       letterTyped = true;
-      // Hide scroll indicator after typing is complete
-      setTimeout(() => {
-        scrollIndicator.style.opacity = '0';
-        setTimeout(() => {
-          scrollIndicator.style.display = 'none';
-        }, 500);
-      }, 2000);
+      // Keep scroll indicator visible after typing
+      if (scrollIndicator) {
+        scrollIndicator.style.opacity = '1';
+      }
     }
   }
   
@@ -672,11 +694,14 @@ document.addEventListener('keydown', function(e) {
 const loveLetter = document.getElementById('loveLetter');
 if (loveLetter) {
   loveLetter.addEventListener('scroll', () => {
-    if (loveLetter.scrollTop > 50) {
-      scrollIndicator.style.opacity = '0';
-      setTimeout(() => {
-        scrollIndicator.style.display = 'none';
-      }, 300);
+    if (loveLetter.scrollTop > 100) {
+      // User has scrolled down, hide indicator
+      if (scrollIndicator) {
+        scrollIndicator.style.opacity = '0';
+        setTimeout(() => {
+          scrollIndicator.style.display = 'none';
+        }, 300);
+      }
     }
   });
 }
