@@ -15,10 +15,12 @@
       font-family: system-ui, -apple-system, sans-serif;
       background: linear-gradient(135deg, #ffecf5 0%, #fff5f9 50%, #e6f0ff 100%);
       color: #4a2c3f;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
       position: relative;
+      padding: 20px;
     }
     body::before {
       content: "";
@@ -38,15 +40,14 @@
     .container {
       position: relative;
       width: 100%;
-      max-width: 360px;          /* ← nhỏ hơn trước */
-      padding: 16px;
+      max-width: 360px;
       z-index: 1;
     }
     #screen-input {
       background: rgba(255, 245, 250, 0.88);
       border: 1px solid #ffb6c1;
       border-radius: 20px;
-      padding: 2.2rem 1.6rem;    /* ← padding nhỏ hơn */
+      padding: 2.2rem 1.6rem;
       box-shadow: 0 10px 34px rgba(255,182,193,0.22);
       backdrop-filter: blur(10px);
       text-align: center;
@@ -57,15 +58,23 @@
       transform: scale(0.94);
       pointer-events: none;
     }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+      20%, 40%, 60%, 80% { transform: translateX(8px); }
+    }
+    #screen-input.shake {
+      animation: shake 0.5s;
+    }
     h1 {
-      font-size: 1.7rem;         /* ← nhỏ hơn */
+      font-size: 1.7rem;
       margin-bottom: 1.6rem;
       color: #e91e63;
       letter-spacing: 1.2px;
       text-shadow: 0 2px 6px rgba(233,30,99,0.15);
     }
     .code-display {
-      font-size: 2.6rem;         /* ← nhỏ hơn */
+      font-size: 2.6rem;
       letter-spacing: 18px;
       font-weight: 700;
       color: #c2185b;
@@ -74,7 +83,7 @@
       border-radius: 14px;
       padding: 12px 20px;
       margin: 1.2rem auto 1.8rem;
-      width: 210px;              /* ← nhỏ hơn */
+      width: 210px;
       min-height: 66px;
       display: flex;
       align-items: center;
@@ -90,13 +99,13 @@
     .keypad {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;                 /* ← khoảng cách nhỏ hơn */
-      max-width: 240px;          /* ← nhỏ hơn */
+      gap: 14px;
+      max-width: 240px;
       margin: 0 auto;
     }
     .key {
       aspect-ratio: 1;
-      font-size: 1.6rem;         /* ← nhỏ hơn */
+      font-size: 1.6rem;
       font-weight: 600;
       color: #c2185b;
       background: linear-gradient(145deg, #fff0f5, #ffebee);
@@ -140,7 +149,13 @@
       align-items: center;
       width: 100%;
       height: 100%;
-      cursor: pointer;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 20px;
+      z-index: 100;
     }
     #screen-letter.visible {
       opacity: 1;
@@ -154,6 +169,7 @@
       margin-bottom: 1.2rem;
       text-align: center;
       animation: pulse 2s ease-in-out infinite;
+      margin-top: 20vh;
     }
     @keyframes pulse {
       0%, 100% { opacity: 0.7; }
@@ -162,12 +178,12 @@
     .envelope-wrapper {
       position: relative;
       width: 100%;
-      max-width: 420px;          /* phong bì vẫn vừa đủ */
+      max-width: 420px;
       perspective: 1100px;
     }
     .envelope {
       width: 100%;
-      height: 240px;             /* ← phong bì nhỏ hơn */
+      height: 240px;
       position: relative;
       cursor: pointer;
       transition: transform 0.5s ease;
@@ -204,19 +220,22 @@
     .envelope.open .flap {
       transform: rotateX(-180deg);
     }
+    .envelope.closing .flap {
+      transform: rotateX(0deg) !important;
+    }
     .letter {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0);
       width: 92%;
-      max-width: 380px;          /* ← khung thư hơi nhỏ hơn nhưng vẫn rộng rãi */
-      height: 480px;             /* Giữ nguyên chiều cao để đọc thoải mái */
+      max-width: 380px;
+      height: 480px;
       background: #ffffff;
       border: 2px solid #ffebee;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      padding: 2rem 1.8rem;      /* Giữ padding để chữ thoáng */
+      padding: 2rem 1.8rem;
       font-size: 0.95rem;
       line-height: 1.7;
       color: #4a2c3f;
@@ -237,10 +256,15 @@
       opacity: 1;
       pointer-events: auto;
     }
+    .letter.closing {
+      transform: translate(-50%, -50%) scale(0) !important;
+      opacity: 0 !important;
+      transition: transform 0.6s cubic-bezier(0.6, 0, 0.8, 0.2), opacity 0.5s !important;
+    }
     @media (max-width: 480px) {
       .letter {
         width: 94%;
-        height: 460px;           /* hơi giảm cho mobile nhưng vẫn đủ đọc */
+        height: 460px;
         padding: 1.8rem 1.6rem;
         font-size: 0.94rem;
       }
@@ -249,17 +273,26 @@
       .letter {
         height: 420px;
       }
-    }
-    .letter.closing {
-      transform: translate(-50%, -50%) scale(0) !important;
-      opacity: 0 !important;
-    }
-    .envelope.closing .flap {
-      transform: rotateX(0deg) !important;
+      .instruction {
+        margin-top: 10vh;
+      }
     }
     .bold { font-weight: bold; }
     .italic { font-style: italic; }
     .pink { color: #e91e63; font-weight: 600; }
+    
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: #e91e63;
+      margin-left: 2px;
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -288,9 +321,6 @@
 </div>
 
 <script>
-// ──────────────────────────────────────────────
-// JavaScript giữ nguyên như cũ
-// ──────────────────────────────────────────────
 const CORRECT_CODE = "1302";
 const screenInput = document.getElementById("screen-input");
 const screenLetter = document.getElementById("screen-letter");
@@ -307,6 +337,7 @@ birthdaySong.volume = 0.65;
 let currentCode = "";
 let isTyping = false;
 let isOpen = false;
+let letterFullyTyped = false;
 
 const letterText = [
   "Chúc mừng sinh nhật <h>bé yêu</h>, tròn <h>20 tuổi</h>.",
@@ -351,6 +382,12 @@ function updateDisplay() {
   codeDisplay.classList.toggle("filled", currentCode.length === 4);
 }
 
+function vibrateDevice() {
+  if ('vibrate' in navigator) {
+    navigator.vibrate([100, 50, 100, 50, 100]);
+  }
+}
+
 function checkCode() {
   if (currentCode === CORRECT_CODE) {
     birthdaySong.play().catch(err => console.error("Không thể phát nhạc:", err));
@@ -360,34 +397,49 @@ function checkCode() {
       screenLetter.classList.add("visible");
     }, 700);
   } else {
+    vibrateDevice();
     errorMsg.textContent = "Mã không đúng. Thử lại nhé!";
     errorMsg.classList.add("show");
     currentCode = "";
     updateDisplay();
-    codeDisplay.style.animation = "none";
-    void codeDisplay.offsetWidth;
-    codeDisplay.style.animation = "shake 0.5s";
+    screenInput.classList.add("shake");
+    setTimeout(() => {
+      screenInput.classList.remove("shake");
+      setTimeout(() => {
+        errorMsg.classList.remove("show");
+      }, 2000);
+    }, 500);
   }
 }
 
 envelope.addEventListener("click", (e) => {
   e.stopPropagation();
-  if (!envelope.classList.contains("open") && !isTyping) {
+  if (!envelope.classList.contains("open") && !envelope.classList.contains("closing")) {
     envelope.classList.add("open");
     isOpen = true;
-    setTimeout(() => startTyping(), 700);
+    if (!letterFullyTyped) {
+      setTimeout(() => startTyping(), 700);
+    }
   }
 });
 
 screenLetter.addEventListener("click", (e) => {
   if (!isOpen) return;
-  const rect = envelope.getBoundingClientRect();
-  const isOutside =
-    e.clientX < rect.left ||
-    e.clientX > rect.right ||
-    e.clientY < rect.top ||
-    e.clientY > rect.bottom;
-  if (isOutside) {
+  
+  // Nếu đang gõ chữ thì không cho đóng
+  if (isTyping) return;
+  
+  const envelopeRect = envelope.getBoundingClientRect();
+  const letterRect = letter.getBoundingClientRect();
+  
+  const clickedInside = (
+    e.clientX >= letterRect.left &&
+    e.clientX <= letterRect.right &&
+    e.clientY >= letterRect.top &&
+    e.clientY <= letterRect.bottom
+  );
+  
+  if (!clickedInside) {
     closeEnvelope();
   }
 });
@@ -395,21 +447,40 @@ screenLetter.addEventListener("click", (e) => {
 function closeEnvelope() {
   if (!isOpen) return;
   isOpen = false;
-  isTyping = false;
-  envelope.classList.add("closing");
+  
   letter.classList.add("closing");
+  
+  setTimeout(() => {
+    envelope.classList.add("closing");
+  }, 100);
+  
   setTimeout(() => {
     envelope.classList.remove("open", "closing");
     letter.classList.remove("closing");
-    letterContent.innerHTML = "";
   }, 1200);
 }
 
 async function startTyping() {
+  // Nếu đã gõ xong rồi thì không gõ lại nữa
+  if (letterFullyTyped) return;
+  
+  // Kiểm tra nếu nội dung đã có sẵn (có các thẻ p bên trong)
+  if (letterContent.children.length > 0) {
+    letterFullyTyped = true;
+    return;
+  }
+  
+  // Nếu đang gõ thì không gõ đè
+  if (isTyping) return;
+  
   isTyping = true;
-  letterContent.innerHTML = "";
+  
   for (let i = 0; i < letterText.length; i++) {
-    if (!isOpen) return;
+    if (!isOpen) {
+      isTyping = false;
+      return;
+    }
+    
     const p = document.createElement("p");
     if (i === letterText.length - 1) {
       p.style.textAlign = "right";
@@ -417,26 +488,33 @@ async function startTyping() {
     }
     p.classList.add("typing");
     letterContent.appendChild(p);
+    
     const formatted = applyFormatting(letterText[i]);
     let displayed = "";
+    
     for (let char of formatted) {
-      if (!isOpen) return;
+      if (!isOpen) {
+        isTyping = false;
+        return;
+      }
       displayed += char;
       p.innerHTML = displayed + '<span class="typing-cursor"></span>';
       await sleep(Math.random() * 30 + 20);
       letter.scrollTop = letter.scrollHeight;
     }
+    
     p.innerHTML = displayed;
     await sleep(400);
   }
+  
   isTyping = false;
+  letterFullyTyped = true;
 }
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Khởi tạo
 createKeypad();
 updateDisplay();
 </script>
