@@ -2,13 +2,24 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- TẮT HOÀN TOÀN THU PHÓNG / ZOOM -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="HandheldFriendly" content="true" />
+  
   <title>Happy Birthday</title>
+  
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+    html, body {
+      touch-action: manipulation;
+      -webkit-text-size-adjust: 100%;
     }
     body {
       min-height: 100vh;
@@ -280,7 +291,97 @@
     .bold { font-weight: bold; }
     .italic { font-style: italic; }
     .pink { color: #e91e63; font-weight: 600; }
-    
+
+    /* === HIỆU ỨNG MỚI LUNG LINH === */
+    .glow {
+      color: #ff69b4;
+      text-shadow: 
+        0 0 7px #ff69b4,
+        0 0 10px #ff69b4,
+        0 0 21px #ff1493,
+        0 0 42px #ff1493;
+      animation: pulse-glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes pulse-glow {
+      from { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493, 0 0 30px #c71585; }
+      to   { text-shadow: 0 0 20px #ff69b4, 0 0 30px #ff1493, 0 0 50px #c71585; }
+    }
+
+    .sparkle {
+      position: relative;
+      color: #fff;
+      background: linear-gradient(90deg, #ffe4e1, #ffb6c1, #ff69b4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: sparkle-shine 3s linear infinite;
+    }
+    .sparkle::after {
+      content: "✨";
+      position: absolute;
+      top: -10px;
+      right: -12px;
+      font-size: 0.7em;
+      animation: twinkle 1.5s infinite;
+    }
+    @keyframes sparkle-shine {
+      0%,100% { background-position: 0% 50%; }
+      50%     { background-position: 100% 50%; }
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.4; transform: scale(0.8); }
+      50%     { opacity: 1; transform: scale(1.2); }
+    }
+
+    .rainbow {
+      background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: rainbow-move 2s linear infinite;
+    }
+    @keyframes rainbow-move {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .heart {
+      color: #e91e63;
+      display: inline-block;
+      animation: heartbeat 1.2s infinite;
+    }
+    .heart::before {
+      content: "❤️ ";
+      font-size: 1.1em;
+    }
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      50%     { transform: scale(1.15); }
+    }
+
+    .shine {
+      background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 70%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: #ff69b4;
+      animation: shine-move 3s infinite;
+    }
+    @keyframes shine-move {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .float {
+      display: inline-block;
+      animation: float-up-down 4s ease-in-out infinite;
+    }
+    @keyframes float-up-down {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-6px); }
+    }
+
     .typing-cursor {
       display: inline-block;
       width: 2px;
@@ -293,6 +394,98 @@
       0%, 49% { opacity: 1; }
       50%, 100% { opacity: 0; }
     }
+    
+    /* ===== HIỆU ỨNG BỔ SUNG ===== */
+
+.gradient {
+  background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 6s ease infinite;
+}
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.shadow {
+  color: #e91e63;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.25);
+}
+
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 1px #e91e63;
+}
+
+.bounce {
+  display: inline-block;
+  animation: bounceText 1.2s infinite;
+}
+@keyframes bounceText {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.shake-text {
+  display: inline-block;
+  animation: shakeText 0.6s infinite;
+}
+@keyframes shakeText {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+.pulse-text {
+  animation: pulseText 1.5s infinite;
+}
+@keyframes pulseText {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.love {
+  color: #ff1493;
+  font-weight: 600;
+  animation: loveBeat 1.3s infinite;
+}
+@keyframes loveBeat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.gold {
+  background: linear-gradient(45deg, #ffd700, #fff8dc, #daa520);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fire {
+  background: linear-gradient(0deg, #ff0000, #ff8c00, #ffff00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fireMove 2s linear infinite;
+}
+@keyframes fireMove {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.4); }
+  100% { filter: brightness(1); }
+}
+
+.type {
+  border-right: 2px solid #e91e63;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typingEffect 3s steps(30, end), blink 0.7s infinite;
+}
+@keyframes typingEffect {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
   </style>
 </head>
 <body>
@@ -303,16 +496,14 @@
     <div class="keypad" id="keypad"></div>
     <div id="error-msg"></div>
   </div>
-
   <div id="screen-letter">
     <div class="instruction">✨ Nhấn vào phong bì để mở thư ✨</div>
- 
     <div class="envelope-wrapper">
       <div class="envelope" id="envelope">
         <div class="envelope-body"></div>
         <div class="flap"></div>
         <div class="letter" id="letter">
-          <h2>Gửi người đặc biệt của anh,</h2>
+          <h2>Gửi bé iu của anhhh </h2>
           <div class="letter-content" id="letter-content"></div>
         </div>
       </div>
@@ -330,7 +521,6 @@ const errorMsg = document.getElementById("error-msg");
 const envelope = document.getElementById("envelope");
 const letter = document.getElementById("letter");
 const letterContent = document.getElementById("letter-content");
-
 const birthdaySong = new Audio("hpbd.mp3");
 birthdaySong.volume = 0.65;
 
@@ -340,22 +530,51 @@ let isOpen = false;
 let letterFullyTyped = false;
 
 const letterText = [
-  "Chúc mừng sinh nhật <h>bé yêu</h>, tròn <h>20 tuổi</h>.",
-  "Hôm nay là một ngày rất riêng - không chỉ vì sinh nhật bé, mà vì <b>từ hôm nay, bé lại lớn thêm một chút trong cuộc đời này</b>.",
-  "Anh không mong điều gì quá lớn lao, chỉ mong những ngày sắp tới sẽ nhẹ nhàng hơn với bé, và nếu có mệt mỏi, thì chúng cũng sẽ qua đi thật nhanh.",
-  "Cảm ơn bé vì đã <b>đến bên anh</b>, và còn quý hơn nữa là đã <b>ở lại</b>, ngay cả khi mọi thứ chưa từng hoàn hảo.",
-  "Có thể anh không nói nhiều, nhưng trong lòng anh luôn biết rõ một điều: <i>bé là người anh muốn ở cạnh lâu dài</i>.",
-  "Tuổi mới, anh mong bé luôn bình yên, luôn được yêu thương đúng cách, và khi cần một nơi để dựa vào, <b>anh vẫn ở đây</b>.",
-  "Anh không hứa những điều xa vời, chỉ hứa sẽ <h>thương bé thật lâu</h>, theo cách chậm rãi và chân thành nhất.",
-  "<i>Anh iu <333333</i>"
+
+  "Chúc mừng sinh nhật <h>bé yêu</h> tròn <glow>20 tuổi</glow> - <rainbow>Ngày đặc biệt nhất </rainbow>",
+
+  "Hôm nay là một ngày <glow>rất đặc biệt</glow> — vì <b>bé iu của anh có thêm 1 tuổi mới</b>.",
+
+  "Anh mong tuổi mới mang đến cho em <rainbow> nhiều niềm vui và may mắn</rainbow>, và những khoảnh khắc <shine>hạnh phúc nhất trong cuộc đời mình</shine>.",
+
+  "Cảm ơn bé vì đã <love>đến bên anh</love>, và đã <love>ở lại</love> ngay cả khi mọi thứ với anh chưa từng hoàn hảo.",
+
+  "Có thể anh không nói nhiều, nhưng anh luôn chắc chắn một điều: <i>bé là người anh muốn ở cạnh <float>lâu dài</float></i>.",
+
+  "Tuổi mới, anh mong bé luôn <pulse>bình yên</pulse>, <outline>mạnh mẽ</outline> và đôi khi vẫn <bounce>nhõng nhẽo đáng yêu</bounce> như bây giờ.",
+
+  "Nếu có lúc buồn, đừng <shake>suy nghĩ quá nhiều</shake> — vì phía sau bé luôn có một người <b>âm thầm dõi theo</b>.",
+
+  "Anh không hứa những điều xa vời, chỉ hứa sẽ <bounce><glow>thương bé thật lâu</glow></bounce>, theo cách <float>chậm rãi và chân thành nhất...<float> <heart>❤️</heart>",
+
+  "<glow>Anh iu của bé</glow>"
 ];
+
+
 
 function applyFormatting(text) {
   return text
     .replace(/<b>(.*?)<\/b>/g, '<span class="bold">$1</span>')
     .replace(/<i>(.*?)<\/i>/g, '<span class="italic">$1</span>')
-    .replace(/<h>(.*?)<\/h>/g, '<span class="pink">$1</span>');
+    .replace(/<h>(.*?)<\/h>/g, '<span class="pink">$1</span>')
+    .replace(/<glow>(.*?)<\/glow>/g, '<span class="glow">$1</span>')
+    .replace(/<sparkle>(.*?)<\/sparkle>/g, '<span class="sparkle">$1</span>')
+    .replace(/<rainbow>(.*?)<\/rainbow>/g, '<span class="rainbow">$1</span>')
+    .replace(/<heart>(.*?)<\/heart>/g, '<span class="heart">$1</span>')
+    .replace(/<shine>(.*?)<\/shine>/g, '<span class="shine">$1</span>')
+    .replace(/<float>(.*?)<\/float>/g, '<span class="float">$1</span>')
+    .replace(/<gradient>(.*?)<\/gradient>/g, '<span class="gradient">$1</span>')
+    .replace(/<shadow>(.*?)<\/shadow>/g, '<span class="shadow">$1</span>')
+    .replace(/<outline>(.*?)<\/outline>/g, '<span class="outline">$1</span>')
+    .replace(/<bounce>(.*?)<\/bounce>/g, '<span class="bounce">$1</span>')
+    .replace(/<shake>(.*?)<\/shake>/g, '<span class="shake-text">$1</span>')
+    .replace(/<pulse>(.*?)<\/pulse>/g, '<span class="pulse-text">$1</span>')
+    .replace(/<love>(.*?)<\/love>/g, '<span class="love">$1</span>')
+    .replace(/<gold>(.*?)<\/gold>/g, '<span class="gold">$1</span>')
+    .replace(/<fire>(.*?)<\/fire>/g, '<span class="fire">$1</span>')
+    .replace(/<type>(.*?)<\/type>/g, '<span class="type">$1</span>');
 }
+
 
 function createKeypad() {
   for (let i = 1; i <= 9; i++) createKey(i);
@@ -425,20 +644,18 @@ envelope.addEventListener("click", (e) => {
 
 screenLetter.addEventListener("click", (e) => {
   if (!isOpen) return;
-  
-  // Nếu đang gõ chữ thì không cho đóng
   if (isTyping) return;
-  
+ 
   const envelopeRect = envelope.getBoundingClientRect();
   const letterRect = letter.getBoundingClientRect();
-  
+ 
   const clickedInside = (
     e.clientX >= letterRect.left &&
     e.clientX <= letterRect.right &&
     e.clientY >= letterRect.top &&
     e.clientY <= letterRect.bottom
   );
-  
+ 
   if (!clickedInside) {
     closeEnvelope();
   }
@@ -447,13 +664,13 @@ screenLetter.addEventListener("click", (e) => {
 function closeEnvelope() {
   if (!isOpen) return;
   isOpen = false;
-  
+ 
   letter.classList.add("closing");
-  
+ 
   setTimeout(() => {
     envelope.classList.add("closing");
   }, 100);
-  
+ 
   setTimeout(() => {
     envelope.classList.remove("open", "closing");
     letter.classList.remove("closing");
@@ -461,26 +678,21 @@ function closeEnvelope() {
 }
 
 async function startTyping() {
-  // Nếu đã gõ xong rồi thì không gõ lại nữa
   if (letterFullyTyped) return;
-  
-  // Kiểm tra nếu nội dung đã có sẵn (có các thẻ p bên trong)
   if (letterContent.children.length > 0) {
     letterFullyTyped = true;
     return;
   }
-  
-  // Nếu đang gõ thì không gõ đè
   if (isTyping) return;
-  
+ 
   isTyping = true;
-  
+ 
   for (let i = 0; i < letterText.length; i++) {
     if (!isOpen) {
       isTyping = false;
       return;
     }
-    
+   
     const p = document.createElement("p");
     if (i === letterText.length - 1) {
       p.style.textAlign = "right";
@@ -488,10 +700,10 @@ async function startTyping() {
     }
     p.classList.add("typing");
     letterContent.appendChild(p);
-    
+   
     const formatted = applyFormatting(letterText[i]);
     let displayed = "";
-    
+   
     for (let char of formatted) {
       if (!isOpen) {
         isTyping = false;
@@ -502,11 +714,11 @@ async function startTyping() {
       await sleep(Math.random() * 30 + 20);
       letter.scrollTop = letter.scrollHeight;
     }
-    
+   
     p.innerHTML = displayed;
     await sleep(400);
   }
-  
+ 
   isTyping = false;
   letterFullyTyped = true;
 }
